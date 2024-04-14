@@ -13,4 +13,4 @@ The root repository for all my smart-home related repos and posts. More or less 
 
 ## Probably not worth a repo
 
-- Bulk renaming Shelly devices: [Shelly-Renamer]()
+- Bulk renaming Shelly devices: [Shelly-Renamer](https://github.com/Pytonballoon810/Smart-Home/tree/main/Shelly-Renamer)  
