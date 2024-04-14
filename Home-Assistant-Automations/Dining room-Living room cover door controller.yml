@@ -1,0 +1,197 @@
+alias: Dining room-Living room cover door controller
+description: ""
+trigger:
+  - type: opened
+    platform: device
+    device_id: e6a87202abebcd46357a5352968d0329
+    entity_id: binary_sensor.esszimmer_tuersensor_door
+    domain: binary_sensor
+    id: EZ_open
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
+  - type: not_opened
+    platform: device
+    device_id: e6a87202abebcd46357a5352968d0329
+    entity_id: binary_sensor.esszimmer_tuersensor_door
+    domain: binary_sensor
+    id: EZ_closed
+  - type: opened
+    platform: device
+    device_id: e27b45f2394c7b0a43b2cf101d316788
+    entity_id: binary_sensor.wohnzimmer_tuersensor_door
+    domain: binary_sensor
+    id: WZ_open
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+  - type: not_opened
+    platform: device
+    device_id: e27b45f2394c7b0a43b2cf101d316788
+    entity_id: binary_sensor.wohnzimmer_tuersensor_door
+    domain: binary_sensor
+    id: WZ_closed
+  - platform: device
+    device_id: 705dd33ebc5f594d1797d8f444c8979a
+    domain: cover
+    entity_id: cover.esszimmer_rollo_tuer
+    type: opening
+    id: EZ_opening
+  - platform: device
+    device_id: c97b6044eb79a57d8f3558624cfa6277
+    domain: cover
+    entity_id: cover.wohnzimmer_rollo_tuer
+    type: opening
+    id: WZ_opening
+  - type: opened
+    platform: device
+    device_id: e6a87202abebcd46357a5352968d0329
+    entity_id: binary_sensor.esszimmer_tuersensor_door
+    domain: binary_sensor
+    id: EZ_open_30s
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+condition:
+  - condition: not
+    conditions:
+      - condition: state
+        entity_id: sensor.season
+        state: winter
+action:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id:
+              - EZ_open_30s
+        sequence:
+          - device_id: 705dd33ebc5f594d1797d8f444c8979a
+            domain: cover
+            entity_id: cover.esszimmer_rollo_tuer
+            type: set_position
+            position: 93
+      - conditions:
+          - condition: trigger
+            id: EZ_closed
+        sequence:
+          - service: cover.set_cover_position
+            data:
+              position: >-
+                {{ (state_attr('cover.rollo_esszimmer_groses_fenster_shelly_pm',
+                'current_position') | int) }}
+            target:
+              device_id: 705dd33ebc5f594d1797d8f444c8979a
+      - conditions:
+          - condition: trigger
+            id: EZ_opening
+          - type: is_open
+            condition: device
+            device_id: e6a87202abebcd46357a5352968d0329
+            entity_id: binary_sensor.esszimmer_tuersensor_door
+            domain: binary_sensor
+            for:
+              hours: 0
+              minutes: 0
+              seconds: 0
+        sequence:
+          - wait_for_trigger:
+              - platform: device
+                device_id: 705dd33ebc5f594d1797d8f444c8979a
+                domain: cover
+                entity_id: cover.esszimmer_rollo_tuer
+                type: opened
+          - if:
+              - condition: not
+                conditions:
+                  - condition: numeric_state
+                    entity_id: cover.esszimmer_rollo_tuer
+                    attribute: current_position
+                    above: 0
+                    below: 93
+            then:
+              - device_id: 705dd33ebc5f594d1797d8f444c8979a
+                domain: cover
+                entity_id: cover.esszimmer_rollo_tuer
+                type: set_position
+                position: 100
+              - device_id: 705dd33ebc5f594d1797d8f444c8979a
+                domain: cover
+                entity_id: cover.esszimmer_rollo_tuer
+                type: set_position
+                position: 93
+      - conditions:
+          - condition: and
+            conditions:
+              - condition: trigger
+                id:
+                  - EZ_open
+              - condition: device
+                device_id: 705dd33ebc5f594d1797d8f444c8979a
+                domain: cover
+                entity_id: 509c8b453815e1be33674a7fc1083211
+                type: is_position
+                below: 92
+        sequence:
+          - device_id: 705dd33ebc5f594d1797d8f444c8979a
+            domain: cover
+            entity_id: 509c8b453815e1be33674a7fc1083211
+            type: set_position
+            position: 93
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: WZ_open
+        sequence:
+          - device_id: c97b6044eb79a57d8f3558624cfa6277
+            domain: cover
+            entity_id: cover.wohnzimmer_rollo_tuer
+            type: set_position
+            position: 94
+      - conditions:
+          - condition: trigger
+            id: WZ_closed
+        sequence:
+          - device_id: c97b6044eb79a57d8f3558624cfa6277
+            domain: cover
+            entity_id: cover.wohnzimmer_rollo_tuer
+            type: set_position
+            position: 100
+      - conditions:
+          - condition: trigger
+            id: WZ_opening
+          - type: is_open
+            condition: device
+            device_id: e27b45f2394c7b0a43b2cf101d316788
+            entity_id: binary_sensor.wohnzimmer_tuersensor_door
+            domain: binary_sensor
+        sequence:
+          - wait_for_trigger:
+              - platform: device
+                device_id: c97b6044eb79a57d8f3558624cfa6277
+                domain: cover
+                entity_id: cover.wohnzimmer_rollo_tuer
+                type: opened
+          - if:
+              - condition: not
+                conditions:
+                  - condition: numeric_state
+                    entity_id: cover.wohnzimmer_rollo_tuer
+                    attribute: current_position
+                    above: 0
+                    below: 94
+            then:
+              - device_id: c97b6044eb79a57d8f3558624cfa6277
+                domain: cover
+                entity_id: cover.wohnzimmer_rollo_tuer
+                type: set_position
+                position: 100
+              - device_id: c97b6044eb79a57d8f3558624cfa6277
+                domain: cover
+                entity_id: cover.wohnzimmer_rollo_tuer
+                type: set_position
+                position: 94
+mode: parallel
+max: 10
