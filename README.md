@@ -7,6 +7,7 @@ The root repository for all my smart-home related repos and posts. More or less 
 - Cistern Filling Level Monitoring using ESP-Home: TBP
 - Water Flow Monitoring using ESP-Home: TBP
 - Gas Flow Monitoring using ESP-Home: TBP
+- Smart ESP32 Camera on an interval: [Smart-Home-Interval-Camera](https://github.com/Pytonballoon810/Smart-Home-Interval-Camera)
 
 
 ## Bulk Editing / Software Manipulation (Scripts)
