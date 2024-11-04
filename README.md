@@ -4,10 +4,12 @@ The root repository for all my smart-home related repos and posts. More or less 
 ## DIY Projects
 
 - Smart Lawn Sprinkler System: [Smart-Home-Lawn-Sprayer](https://github.com/Pytonballoon810/Smart-Home-Lawn-Sprayer)  
-- Cistern Filling Level Monitoring using ESP-Home: TBP
+- Cistern Filling Level Monitoring using ESP-Home: To be published
 - Water Flow Monitoring using ESP-Home: TBP
 - Gas Flow Monitoring using ESP-Home: TBP
-- Smart ESP32 Camera on an interval: [Smart-Home-Interval-Camera](https://github.com/Pytonballoon810/Smart-Home-Interval-Camera)
+- Smart ESP32 Camera on an interval: [Smart-Home-Interval-Camera](https://github.com/Pytonballoon810/Smart-Home-Interval-Camera)  
+- Smart convertion for a gira doorbell system: [Smart-Home-Doorbell](https://github.com/Pytonballoon810/Smart-Home-Doorbell)
+- Tablet Wall Mount with possible buttons and state indicators: [Tablet-Wall-Mount]()
 
 
 ## Bulk Editing / Software Manipulation (Scripts)
